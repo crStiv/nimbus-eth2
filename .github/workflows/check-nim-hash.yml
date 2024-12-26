@@ -1,0 +1,19 @@
+name: Check Nim Hash
+on: 
+  pull_request:
+    paths:
+      - 'nix/nimble.nix'
+  push:
+    branches:
+      - stable
+      - testing
+
+jobs:
+  verify-hash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v20
+      - name: Verify Nim hash
+        run: |
+          nix-build nix/nimble.nix 
